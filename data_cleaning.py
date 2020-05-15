@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import LabelEncoder
 
 def dropMissingColumns(df, threshold = 20):
     '''Make a dict with the names of the columns and then drop this columns from dataframe 
@@ -97,6 +98,23 @@ def timestampToFloat(df, column):
     df[column] = df[column].replace('NaT', 'NaN')
     return df[column].astype('float')
 
+def timestampToInt(df, column):
+    '''Convert to int a datetime column
+    
+    Args:
+       df (pandas dataframe): dataframe 
+       column (string): column name
+       
+    Returns:
+       column converted from timestamp to int
+    
+    '''
+    timestamp =  pd.to_datetime(df[column]) ## pandas recognizes your format
+
+    df[column] = timestamp.dt.strftime('%Y%m%d')
+    return df[column].astype('int32')
+
+
 def to_category(df, categorical_columns):
     '''Convert to categorical a list of columns
     
@@ -113,7 +131,23 @@ def to_category(df, categorical_columns):
     
     return df
 
+def to_int(df, categorical_columns):
+    '''Convert to int a list of columns
+    
+    Args:
+       df (pandas dataframe): dataframe 
+       categorical_columns (list): list of columns to convert to int
+       
+    Returns:
+       dataframe with converted columns
+    
+    '''
+    for column in categorical_columns:
+        df[column] = df[column].astype('uint8', inplace = True)
+    
+    return df
 
+#Inspired in https://towardsdatascience.com/make-working-with-large-dataframes-easier-at-least-for-your-memory-6f52b5f4b5c4
 def impute_mode_categorical(df):
     '''Impute mode into categorical columns of the dataframe 
     (objects and category types)
@@ -137,3 +171,34 @@ def impute_mode_categorical(df):
             col_data.fillna(mode, inplace=True)
             
     return df
+
+def impute_median_numerical(df):
+    '''Impute median into numerical columns of the dataframe 
+    (objects and category types)
+    
+    Args:
+       df (pandas dataframe): dataframe 
+       
+    Returns:
+      dataframe with imputed NaNs
+    
+    '''
+    numeric_cols = df.select_dtypes(include=['int','float'])
+    cols = list(df)
+    
+    for column in numeric_cols: 
+        col_data = df[column]
+        
+        col_data.replace(-1,np.nan, inplace = True)
+        null_data = sum(col_data.isna())
+        median = col_data.median()
+        if null_data > 0:
+            col_data.fillna(median, inplace=True)
+            
+    return df
+
+
+def encodeColumnByLabel(df, label):
+    label_encoder = LabelEncoder()
+    label_encoder.fit(df[label])
+    return label_encoder.transform(df[label])
