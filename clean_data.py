@@ -88,7 +88,7 @@ def timestampToFloat(df, column):
        column (string): column name
        
     Returns:
-       Colum converted from timestamp to float
+       column converted from timestamp to float
     
     '''
     timestamp =  pd.to_datetime(df[column]) ## pandas recognizes your format
@@ -96,3 +96,44 @@ def timestampToFloat(df, column):
     df[column] = timestamp.dt.strftime('%Y%m%d')
     df[column] = df[column].replace('NaT', 'NaN')
     return df[column].astype('float')
+
+def to_category(df, categorical_columns):
+    '''Convert to categorical a list of columns
+    
+    Args:
+       df (pandas dataframe): dataframe 
+       categorical_columns (list): list of columns to convert to category
+       
+    Returns:
+       dataframe with converted columns
+    
+    '''
+    for column in categorical_columns:
+        df[column] = df[column].astype('category', inplace = True)
+    
+    return df
+
+
+def impute_mode_categorical(df):
+    '''Impute mode into categorical columns of the dataframe 
+    (objects and category types)
+    
+    Args:
+       df (pandas dataframe): dataframe 
+       
+    Returns:
+      dataframe with imputed NaNs
+    
+    '''
+    categorical_columns= df.select_dtypes(include=['O','category'])
+    cols = list(df)
+    
+    for column in categorical_columns: 
+        col_data = df[column]
+        col_data.replace(-1,np.nan, inplace = True)
+        null_data = sum(col_data.isna())
+        mode = col_data.mode()[0]
+        if null_data > 0:
+            col_data.fillna(mode, inplace=True)
+            
+    return df
