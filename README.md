@@ -6,13 +6,14 @@ The aim of the project is to analize data to get insights about the kind of popu
 
 
 It is composed by:
+
   1. Notebooks:
-    - Customer Segmentation Report
-    - Supervised Learning Model
+       - Customer Segmentation Report
+       - Supervised Learning Model
     
   2. Python custom libraries
     - data_loading:
-              Contains functions to load the data into the notebook
+              Contains functions to load the data into the **notebook
     - data_cleaning :
               Contains functions to clean the data
     - data_visualization:
