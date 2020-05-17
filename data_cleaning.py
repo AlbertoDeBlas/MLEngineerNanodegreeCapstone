@@ -202,3 +202,12 @@ def encodeColumnByLabel(df, label):
     label_encoder = LabelEncoder()
     label_encoder.fit(df[label])
     return label_encoder.transform(df[label])
+
+
+def getVariancesLowerThan(df, threshold):
+    variances = getVariances(df)
+    np_variances = np.array(variances)
+    np_variances = np_variances[(np_variances < threshold)]
+    variances = pd.Series(np_variances)
+    variances = variances.sort_values(ascending = False)
+    return variances

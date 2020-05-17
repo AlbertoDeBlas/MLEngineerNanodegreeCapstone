@@ -26,7 +26,7 @@ def correlationMap(d):
                 square=True, linewidths=.5, cbar_kws={"shrink": .5})
     
     
-def display_component(v, features_list, component_num, n_components, n_weights=10, ):
+def display_component(v, features_list, component_num, n_components, n_weights=10):
     
     # get index of component (last row - component_num)
     row_idx = n_components-component_num
@@ -52,3 +52,26 @@ def display_component(v, features_list, component_num, n_components, n_weights=1
                    palette="Blues_d")
     ax.set_title("PCA Component Makeup, Component #" + str(component_num))
     plt.show()
+    
+def display_null_distribution(df):
+    f, (ax1) = plt.subplots(1, 1, figsize=(20, 7), sharex=True)
+
+    x = df.index
+    y1 = df.values
+    sns.barplot(x=x, y=y1, palette="rocket", ax=ax1)
+    ax1.axhline(0, color="k", clip_on=False)
+    ax1.set_ylabel("Nulls")
+    ax1.set_xlabel("Features")
+    ax1.set_xticks([])
+
+    
+def display_variance_distribution(df):
+    f, (ax1) = plt.subplots(1, 1, figsize=(20, 7), sharex=True)
+
+    x = list(df)
+    y1 = df.values
+    sns.barplot(x=x, y=y1, palette="rocket", ax=ax1)
+    ax1.axhline(0, color="k", clip_on=False)
+    ax1.set_ylabel("Nulls")
+    ax1.set_xlabel("Features")
+    ax1.set_xticks([])
