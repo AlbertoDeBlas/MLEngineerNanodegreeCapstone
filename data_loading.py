@@ -1,6 +1,21 @@
 import re
 import io
 import pandas as pd
+import ast
+
+def read_config(file_name):
+    '''Returns config values to run the notebook
+    
+    Args:
+       file_name (string): name of the config file
+       
+    Returns:
+       dict with the configuration items 
+    '''
+    with open(file_name, "r") as data:
+        dictionary = ast.literal_eval(data.read())
+    
+    return dictionary
 
 def filter_csv(string):
     return re.search(r'.csv', string)

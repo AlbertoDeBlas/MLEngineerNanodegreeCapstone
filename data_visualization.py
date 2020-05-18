@@ -49,7 +49,7 @@ def display_component(v, features_list, component_num, n_components, n_weights=1
     ax=sns.barplot(data=sorted_weight_data, 
                    x="weights", 
                    y="features", 
-                   palette="Blues_d")
+                   palette="rocket")
     ax.set_title("PCA Component Makeup, Component #" + str(component_num))
     plt.show()
     
