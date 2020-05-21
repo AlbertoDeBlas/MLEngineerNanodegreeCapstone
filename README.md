@@ -61,7 +61,19 @@ It is composed by:
    3. Bash script
     - `my_env.sh`:
              Script with the lines necessary to put into Sagemaker's notebook configuration--> Lifecycle management to                  upgrade libraries from the base image distribution.
-
-
+        
+   4. Third party libraries
+   	- boto3
+   	- sagemaker
+   	- numpy
+   	- pandas
+   	- matplotlib
+   	- seaborn
+   	- io
+   	- os
+   	- mxnet
+   	- ast
+   	- sklearn
+   	
 ## License
  This repository is licensed under GNU General Public License v3.0 . Please read the [LICENSE](https://github.com/AlbertoDeBlas/MLEngineerNanodegreeCapstone/blob/master/LICENSE) before using this repository.
