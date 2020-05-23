@@ -18,7 +18,7 @@ def read_config(file_name):
     return dictionary
 
 def filter_csv(string):
-    return re.search(r'.csv', string)
+    return re.search(r'.csv$', string)
 
 def list_csv_files(obj_list):
     '''Returns a list of csv files from the object list of a dict

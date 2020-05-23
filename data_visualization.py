@@ -26,6 +26,7 @@ def correlationMap(d):
                 square=True, linewidths=.5, cbar_kws={"shrink": .5})
     
     
+    
 def display_component(v, features_list, component_num, n_components, n_weights=10):
     
     # get index of component (last row - component_num)
@@ -63,6 +64,7 @@ def display_null_distribution(df):
     ax1.set_ylabel("Nulls")
     ax1.set_xlabel("Features")
     ax1.set_xticks([])
+
 
     
 def display_variance_distribution(df):

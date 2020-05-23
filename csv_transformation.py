@@ -32,6 +32,41 @@ def csvToDataFrame(filename):
     
     return df
 
+
+def csvToDataFrameLinear(filename):
+    '''Read a csv into a dataframe, specific for the LinearLearner transformation output
+    Args:
+       filename (string): name of the csv file
+       
+    Returns:
+       dataframe with the csv data
+    '''
+    df = pd.read_csv(filename, nrows = 1, header = None)
+    
+    col_types = []
+    for column in range(1, df.shape[1]-1):
+        df[column] = pd.to_numeric(df[column], downcast='float')
+        
+    # create the dict of index names and optimized datatypes
+    dtypes = df.dtypes
+    colnames = dtypes.index
+    types = [i.name for i in dtypes.values]
+    column_types = dict(zip(colnames, types))
+
+    df = pd.read_csv(filename,dtype=column_types, header = None,names = ['zero', 'Response'])
+
+    last_col_index = df.shape[1]-1
+
+    df['zero'] = df['zero'].apply(lambda x: str(x)[38:-1])
+    df['zero'] = pd.to_numeric(df['zero'], downcast='float')
+    df['Response'] = df['Response'].apply(lambda x: str(x)[6:-2])
+    df['Response'] = pd.to_numeric(df['Response'], downcast='float')
+    df = df.drop('zero', axis = 1)
+    
+    return df
+
+
+
 def readKmeanResultToDF(filename):
     '''Read kmean transformation results to a dataframe
     
